@@ -49,24 +49,6 @@ int contacentrali(pnode u){
 	return contacentrali_aux(u,0,numfoglie);
 }
 
-void visita_DFS(node *u){
-
-    stack<node> s;//Uno stack  di nodi
-
-    s.push(*u);
-
-    while(!s.empty()){
-        node x = s.top();
-
-        if(&x != nullptr){
-            cout << x.key <<endl;
-
-            s.push(*x.right);
-            s.push(*x.left);
-        }
-    }
-}
-
 int main() {
 	node nodo_1{0};
     node nodo_2{2,&nodo_1};
