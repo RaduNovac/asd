@@ -50,7 +50,7 @@ int contacentrali(pnode u){
 }
 
 int main() {
-	node nodo_1{0};
+    node nodo_1{0};
     node nodo_2{2,&nodo_1};
     node nodo_3{3,&nodo_1};
     node nodo_4{1,&nodo_2};
@@ -61,12 +61,7 @@ int main() {
     nodo_2.left = &nodo_4;
     nodo_2.right = &nodo_5;
 
-    //cout << nodo_2.right->key << endl;
-
-    //visita_DFS(&nodo_1);
-
     cout << "Numero nodi centrali: " << contacentrali(&nodo_1) <<endl;
-
 
   return(0);
 }
