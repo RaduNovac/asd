@@ -6,51 +6,46 @@
 using namespace std;
 
 struct node{
-    int isBlack;
+    int is_black;
     node* left;
     node* right;
     node* p;
 
-    node(int c, node* padre = nullptr, node* sx = nullptr, node* dx = nullptr)
-        : isBlack{c}, p{padre}, left{sx}, right{dx} {}
+    node(int k, node* padre = nullptr, node* sx = nullptr, node* dx = nullptr)
+        : is_black{k}, p{padre}, left{sx}, right{dx} {}
 }; typedef  node *pnode;
 
-int conta_uguali_aux(pnode u, int &num_b, int &num_n){
-    int nodeSameNumOfDisc_sx, nodeSameNumOfDisc_dx, nodeSameNumOfDisc;
-
-    if(u == nullptr){
-        num_b = 0;
-        num_n = 0;
-        return 0;
-    }
-    int discB_dx, discB_sx, discN_dx, discN_sx;
-    nodeSameNumOfDisc_sx = conta_uguali_aux(u -> left, discB_sx, discN_sx);
-    nodeSameNumOfDisc_dx = conta_uguali_aux(u -> right, discB_dx, discN_dx);
-
-    nodeSameNumOfDisc = nodeSameNumOfDisc_sx + nodeSameNumOfDisc_dx;
-
-    num_b = discB_sx + discB_dx;
-    num_n = discN_sx + discN_dx;
-
-    num_b = u ->isBlack == 1 ? num_b+1 : num_b;
-    num_n = u ->isBlack == 0 ? num_n+1 : num_n;
-
-    if (num_n ==  num_b){
-        return nodeSameNumOfDisc + 1;
+int discendenti_bianchi_neri_aux(pnode u, int& nodi){
+    int sum = 0 ;
+    if(u->left==nullptr&&u->right==nullptr){
+        return u->is_black ? 1 : -1 ;
     }
     else{
-        return nodeSameNumOfDisc;
+        if(u->left!=nullptr){
+            sum += discendenti_bianchi_neri_aux(u->left, nodi);
+        }
+        if(u->right!=nullptr){
+            sum += discendenti_bianchi_neri_aux(u->right, nodi);
+        }
+        if(sum==0){
+            nodi += 1 ;
+        }
+        return sum + u->is_black ? 1 : -1 ;
     }
 }
-
-int conta_uguali(pnode u){
-    int num_b, num_n;
-
-    return conta_uguali_aux(u,num_b, num_n);
+int discendenti_bianchi_neri(pnode u){
+    if(u==nullptr||(u->left==nullptr&&u->right==nullptr)){
+        return 0 ;
+    }
+    else{
+        int nodi = 0;
+        discendenti_bianchi_neri_aux(u, nodi);
+        return nodi;
+    }
 }
 
 int main() {
-    int x;
+    int x = 0;
 
     //Padri
     node nodo_1{0};
@@ -67,7 +62,7 @@ int main() {
     node nodo_12{0,&nodo_6};
     node nodo_13{1,&nodo_6};
     node nodo_14{0,&nodo_7};
-    node nodo_15{1,&nodo_8};
+    node nodo_15{1,&nodo_7};
     //Figli
     nodo_1.left = &nodo_2;
     nodo_1.right = &nodo_3;
@@ -84,7 +79,7 @@ int main() {
     nodo_7.left = &nodo_14;
     nodo_7.right = &nodo_15;
 
-    x = conta_uguali(&nodo_1);
+    x = discendenti_bianchi_neri(&nodo_1);
 
     cout << x << " nodi con numero di discendenti bianchi e neri uguali." << endl;
 
