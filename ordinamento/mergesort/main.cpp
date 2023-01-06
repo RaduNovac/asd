@@ -1,71 +1,59 @@
-// C++ program for Merge Sort
 #include <iostream>
 using namespace std;
 
-// Merges two subarrays of array[].
-// First subarray is arr[begin..mid]
-// Second subarray is arr[mid+1..end]
-void merge(int array[], int const left, int const mid, int const right){
-	auto const subArrayOne = mid - left + 1;
-	auto const subArrayTwo = right - mid;
+void merge(int v[], int const left, int const mid, int const right){
+	int n1 = mid - left + 1;
+	int n2 = right - mid;
 
-	// Create temp arrays
-	auto *leftArray = new int[subArrayOne],
-		*rightArray = new int[subArrayTwo];
+	// Creo  gli array temporanei
+	auto *v_left = new int[n1], *v_right = new int[n2];
 
-	// Copy data to temp arrays leftArray[] and rightArray[]
-	for (auto i = 0; i < subArrayOne; i++)
-		leftArray[i] = array[left + i];
-	for (auto j = 0; j < subArrayTwo; j++)
-		rightArray[j] = array[mid + 1 + j];
+	// Copio i dati negli array temporanei
+	for (auto i = 0; i < n1; i++){
+        v_left[i] = v[left + i];
+    }
+	for (auto j = 0; j < n2; j++){
+        v_right[j] = v[mid + 1 + j];
+    }
 
-	auto indexOfSubArrayOne
-		= 0, // Initial index of first sub-array
-		indexOfSubArrayTwo
-		= 0; // Initial index of second sub-array
-	int indexOfMergedArray
-		= left; // Initial index of merged array
+	int indice_sotto_array_1 = 0, // Indice iniziale del primo sotto-array
+        indice_sotto_array_2 = 0, // Indice iniziale del secondo sotto-array
+        indice_array_unito= left; // Indice iniziale del sotto-array unito
 
 	// Merge the temp arrays back into array[left..right]
-	while (indexOfSubArrayOne < subArrayOne
-		&& indexOfSubArrayTwo < subArrayTwo) {
-		if (leftArray[indexOfSubArrayOne]
-			<= rightArray[indexOfSubArrayTwo]) {
-			array[indexOfMergedArray]
-				= leftArray[indexOfSubArrayOne];
-			indexOfSubArrayOne++;
+	while (indice_sotto_array_1 < n1 && indice_sotto_array_2 < n2) {
+		if (v_left[indice_sotto_array_1] <= v_right[indice_sotto_array_2]) {
+			v[indice_array_unito] = v_left[indice_sotto_array_1];
+            indice_sotto_array_1++;
 		}
 		else {
-			array[indexOfMergedArray]
-				= rightArray[indexOfSubArrayTwo];
-			indexOfSubArrayTwo++;
+			v[indice_array_unito] = v_right[indice_sotto_array_2];
+            indice_sotto_array_2++;
 		}
-		indexOfMergedArray++;
+        indice_array_unito++;
 	}
 	// Copy the remaining elements of
 	// left[], if there are any
-	while (indexOfSubArrayOne < subArrayOne) {
-		array[indexOfMergedArray]
-			= leftArray[indexOfSubArrayOne];
-		indexOfSubArrayOne++;
-		indexOfMergedArray++;
+	while (indice_sotto_array_1 < n1) {
+		v[indice_array_unito] = v_left[indice_sotto_array_1];
+        indice_sotto_array_1++;
+        indice_array_unito++;
 	}
 	// Copy the remaining elements of
 	// right[], if there are any
-	while (indexOfSubArrayTwo < subArrayTwo) {
-		array[indexOfMergedArray]
-			= rightArray[indexOfSubArrayTwo];
-		indexOfSubArrayTwo++;
-		indexOfMergedArray++;
+	while (indice_sotto_array_2 < n2) {
+		v[indice_array_unito] = v_right[indice_sotto_array_2];
+        indice_sotto_array_2++;
+        indice_array_unito++;
 	}
-	delete[] leftArray;
-	delete[] rightArray;
+	delete[] v_left;
+	delete[] v_right;
 }
 
 void mergeSort(int v[], int const begin, int const end)
 {
 	if (begin < end){
-        int mid = ((begin + end) / 2);//Prende comunque la parte itnera  inferiore, sennò si usa floor  dalla libreria cmath
+        int mid = (begin + end) / 2;//Prende comunque la parte itnera  inferiore, sennò si usa floor  dalla libreria cmath
         mergeSort(v, begin, mid);
         mergeSort(v, mid + 1, end);
         merge(v, begin, mid, end);
