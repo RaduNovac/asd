@@ -162,6 +162,5 @@ int main() {
     dizionario.cancel(4);
     
     dizionario.stampa();
-    */
     return 0;
 }
