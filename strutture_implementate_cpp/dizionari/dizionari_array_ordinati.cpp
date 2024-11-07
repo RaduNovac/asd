@@ -61,7 +61,6 @@ class Dizionario {
                     if(A[mid].key > k){
                         return search_index(k, l, mid - 1);
                     }
-            //Altrimenti è <= e cerco nella parte sx
                     else{
                         return search_index(k, mid + 1, r);
                     }

@@ -25,60 +25,89 @@ class Dizionario{
             Head = NULL;
         }
 
-        void search(int k){
-            //Scorro la lista fino a quando non trovo la prima occorrenza di k
+        void print(){
             Record* tmp = Head;
             
-            while(tmp != NULL){
-                if(tmp -> key == k){
-                    cout << "Trovato!\n";
-                    return;
-                }
-                else{
+            while(tmp != nullptr){
+                cout << tmp ->info << endl;
                     tmp = tmp -> next;
                 }
             }
 
-            cout << "Non trovato!\n";
+        string search(int k){
+            //Scorro la lista fino a quando non trovo la prima occorrenza di k
+            Record* tmp = Head;
+            
+            while(tmp != NULL && tmp -> key != k){
+                tmp = tmp -> next;
+            }
+
+            if(tmp != NULL){
+                return tmp -> info;
+            }
+            else{
+                return "";
+            }
         }
 
-        void insert(int k, string str){
+        void insert(int k, string v){
             //Inserisco sempre in testa, non mi devo preoccupare dei duplicati!
-            Record* r = new Record;
+            Record* p = new Record;
 
-            r -> next = Head;
+            p -> info = v;
+            p -> key = k;
 
-            Head = r;
+            p -> next = Head;
 
-            
+            if(Head != NULL){
+                Head -> prev = p;
+            }
+
+            p -> prev = NULL;
+
+            Head = p;
         }
 
         void cancel(int k){
             //Cancella tutte le occorrenze di k
-            
+            Record *x, *tmp;
+
+            x = Head;
+
+            while(x != nullptr){
+                if(x -> key == k){
+                    if(x -> next != nullptr){//Se x ha un elemento successivo
+                        x -> next -> prev = x -> prev;
+                    }
+                    if(x -> prev != nullptr){//Se x non è in testa
+                        x -> prev -> next = x -> next;
+                    }//Se x è la testa
+                    else{
+                        Head = x -> next;
+                    }
+                    
+                    tmp = x;
+                    x = x -> next;
+                }
+                else{
+                    x = x -> next;
+                }
+            }
         }
 };
 
 int main(){
     Dizionario dizionario;
 
-    Record* r1 = new Record;
-    Record* r2 = new Record;
-    Record* r3 = new Record;
-    //Siccome è un puntatore uso la freccia e non il punto
-    r1 -> key = 1; r1 -> info = "Radu"; r1 -> next = r2; r1 -> prev = NULL;
-    r2 -> key = 2; r2 -> info = "Udar"; r2 -> next = r3; r2 -> prev = r1;
-    r3 -> key = 3; r3 -> info = "Marco"; r3 -> next = NULL; r3 -> prev = r3;
+    dizionario.insert(1,"Radu");
+    dizionario.insert(2,"Federico");
+    dizionario.insert(3,"Alessandro");
+    dizionario.insert(4,"Gioele");
+    dizionario.insert(5,"Lorenzo");
 
-    dizionario.Head = r1;
-    dizionario.Head -> next = r2;
-    dizionario.Head -> next -> next = r3;
+    dizionario.cancel(4);
 
-    cout << dizionario.Head -> key << endl;
-    cout << dizionario.Head -> next -> key << endl;
-    cout << dizionario.Head -> next -> next -> key << endl;
-
-    dizionario.search(8);
+    dizionario.print();
 
     return 0;
 }

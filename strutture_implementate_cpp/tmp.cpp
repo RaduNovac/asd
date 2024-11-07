@@ -1,106 +1,113 @@
-//Dizionari ASD in C++
+//Dizionari implementati con record e puntatori | ASD in C++
 
 /* 
-    g++ dizionari.cpp -o dizionari
+    g++ dizionari_record_puntatori.cpp -o dizionari
     ./dizionari
 */
 #include <iostream>
-#include <vector>
 #include <string>
 
 using namespace std;
 
-struct Coppia {
+struct Record {
     int key;
-    string valore;
+    string info;
+    Record* next;
+    Record* prev;
 };
 
-typedef Coppia Coppia;
+typedef Record Record;
 
-class Dizionario {
-
+class Dizionario{
     public:
-        Coppia S[3];
-        int numeroElementi;
+        Record* Head;
+        Dizionario(){
+            Head = NULL;
+        }
 
-        Dizionario() : numeroElementi(3) {}//Da modificare poi in 0
+        void print(){
+            Record* tmp = Head;
 
-        void search(int key){
-            if(search_index(key) != -1){
-                cout << "Trovato!\n";
+            while(tmp != nullptr){
+                cout << tmp ->info << endl;
+                tmp = tmp -> next;
+            }
+        }
+
+        string search(int k){
+            //Scorro la lista fino a quando non trovo la prima occorrenza di k
+            Record* tmp = Head;
+            
+            while(tmp != NULL && tmp -> key != k){
+                tmp = tmp -> next;
+            }
+
+            if(tmp != NULL){
+                return tmp -> info;
             }
             else{
-                cout << "Elemento non presente!\n";
+                return "";
             }
         }
 
-        int search_index(int key){
-            return search_index_aux(key, 0, numeroElementi - 1);
+        void insert(int k, string v){
+            //Inserisco sempre in testa, non mi devo preoccupare dei duplicati!
+            Record* p = new Record;
+
+            p -> info = v;
+            p -> key = k;
+
+            p -> next = Head;
+
+            if(Head != NULL){
+                Head -> prev = p;
+            }
+
+            p -> prev = NULL;
+
+            Head = p;
         }
 
-        int search_index_aux(int key, int left, int right){
-            if (left > right) {
-                return -1;
-            }
+        void cancel(int k){
+            //Cancella tutte le occorrenze di k
+            Record *x, *tmp;
 
-            int mid = left + (right - left) / 2;
+            x = Head;
 
-            if (S[mid].key == key) {
-                return mid;
-            } else if (S[mid].key < key) {
-                return search_index_aux(key, mid + 1, right);
-            } else {
-                return search_index_aux(key, left, mid - 1);
-            }
-        }
-
-        void insert(int key, string valore) {
-            //Se la chiave che voglio inserire c'è già la aggiorno, altrimenti la aggiungo trovando la posizione, ingrandendo il vettore di 1 posizione e shiftando tutto di 1 a dx
-
-            int posizione = search_index(key);
-
-            if(posizione != -1){//Se è già presente la aggiorno
-                cout << "Già presente! Provvedo ad aggiornare il valore...\n";
-
-                S[posizione].valore = valore;
-            }
-            else{//Altrimenti inserisco una nuova coppia
-                Coppia nuovaCoppia = {key, valore};
+            while(x != nullptr){
+                if(x -> key == k){
+                    if(x -> next != nullptr){//Se x ha un elemento successivo
+                        x -> next -> prev = x -> prev;
+                    }
+                    if(x -> prev != nullptr){//Se x non è in testa
+                        x -> prev -> next = x -> next;
+                    }//Se x è la testa
+                    else{
+                        Head = x -> next;
+                    }
+                    
+                    tmp = x;
+                    x = x -> next;
+                }
+                else{
+                    x = x -> next;
+                }
             }
         }
 };
 
-int main() {
+int main(){
     Dizionario dizionario;
-    /*
-    dizionario.insert(1, "Radu");
-    dizionario.insert(2, "Andrea");
-    dizionario.insert(3, "Matteo");
-    */
-    Coppia c1, c2, c3;
 
-    c1.key = 1;
-    c1.valore = "Radu";
+    dizionario.insert(1,"Radu");
+    dizionario.insert(2,"Federico");
+    dizionario.insert(3,"Alessandro");
+    dizionario.insert(4,"Gioele");
+    dizionario.insert(5,"Lorenzo");
 
-    c2.key = 2;
-    c2.valore = "Andrea";
+    dizionario.cancel(4);
 
-    c3.key = 3;
-    c3.valore = "Piero";
-
-    dizionario.S[0] = c1;
-    dizionario.S[1] = c2;
-    dizionario.S[2] = c3;
-
-    cout << "S[0]: " << dizionario.S[0].key << ", " << dizionario.S[0].valore << endl;
-    cout << "S[1]: " << dizionario.S[1].key << ", " << dizionario.S[1].valore << endl;
-    cout << "S[2]: " << dizionario.S[2].key << ", " << dizionario.S[2].valore << endl;
-
-    dizionario.insert(1, "Ciao");
-
-    cout << "S[0]: " << dizionario.S[0].key << ", " << dizionario.S[0].valore << endl;
-    cout << "S[1]: " << dizionario.S[1].key << ", " << dizionario.S[1].valore << endl;
-    cout << "S[2]: " << dizionario.S[2].key << ", " << dizionario.S[2].valore << endl;
+    dizionario.print();
 
     return 0;
 }
