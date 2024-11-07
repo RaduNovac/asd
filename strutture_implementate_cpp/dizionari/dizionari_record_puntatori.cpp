@@ -27,12 +27,12 @@ class Dizionario{
 
         void print(){
             Record* tmp = Head;
-            
+
             while(tmp != nullptr){
                 cout << tmp ->info << endl;
-                    tmp = tmp -> next;
-                }
+                tmp = tmp -> next;
             }
+        }
 
         string search(int k){
             //Scorro la lista fino a quando non trovo la prima occorrenza di k
