@@ -1,113 +1,92 @@
 //Dizionari implementati con record e puntatori | ASD in C++
 
 /* 
-    g++ dizionari_record_puntatori.cpp -o dizionari
-    ./dizionari
+    g++ tmp.cpp -o tmp
+    ./tmp
 */
+
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-struct Record {
-    int key;
+struct Node {
     string info;
-    Record* next;
-    Record* prev;
+    int parent;
 };
 
-typedef Record Record;
+typedef Node Nodo;
 
-class Dizionario{
+class Albero {
     public:
-        Record* Head;
-        Dizionario(){
-            Head = NULL;
+        Nodo* P;
+        int length;
+
+        Albero(){
+            length = 0;
+            P = (Nodo*) malloc(length * sizeof(Nodo));
         }
 
-        void print(){
-            Record* tmp = Head;
-
-            while(tmp != nullptr){
-                cout << tmp ->info << endl;
-                tmp = tmp -> next;
+        //Stampare l'albero
+        void stampaAlbero(){
+            for(int i = 0;i < length;i++){
+                cout << "Indice: " << i << "\nP.info = " << P[i].info << "\nP.parent = " << P[i].parent << endl << endl;
             }
         }
 
-        string search(int k){
-            //Scorro la lista fino a quando non trovo la prima occorrenza di k
-            Record* tmp = Head;
-            
-            while(tmp != NULL && tmp -> key != k){
-                tmp = tmp -> next;
-            }
+        //Aggiungere un nodo
+        void aggiungiNodo(string info, int parent){
+            //Aumento di uno la grandezza
+            length++;
 
-            if(tmp != NULL){
-                return tmp -> info;
+            //Rialloco il vettore con una grandezza in più per il nuovo nodo
+            Nodo* TMP = (Nodo*)realloc(P,(length + 1) * sizeof(Nodo));
+
+            if(TMP != NULL){
+                //Ricopio i valori dentro al nuovo vettore
+                P = TMP;
+
+                //Aggiungo in coda il nuovo nodo
+                P[length - 1].info = info;
+                P[length - 1].parent = parent;
+            }
+        }
+
+        //Padre
+        Nodo* padre(int v){
+            if(P[v].parent == -1){
+                return nullptr;
             }
             else{
-                return "";
+                return &P[P[v].parent];
             }
         }
+        //Figli
 
-        void insert(int k, string v){
-            //Inserisco sempre in testa, non mi devo preoccupare dei duplicati!
-            Record* p = new Record;
-
-            p -> info = v;
-            p -> key = k;
-
-            p -> next = Head;
-
-            if(Head != NULL){
-                Head -> prev = p;
-            }
-
-            p -> prev = NULL;
-
-            Head = p;
-        }
-
-        void cancel(int k){
-            //Cancella tutte le occorrenze di k
-            Record *x, *tmp;
-
-            x = Head;
-
-            while(x != nullptr){
-                if(x -> key == k){
-                    if(x -> next != nullptr){//Se x ha un elemento successivo
-                        x -> next -> prev = x -> prev;
-                    }
-                    if(x -> prev != nullptr){//Se x non è in testa
-                        x -> prev -> next = x -> next;
-                    }//Se x è la testa
-                    else{
-                        Head = x -> next;
-                    }
-                    
-                    tmp = x;
-                    x = x -> next;
-                }
-                else{
-                    x = x -> next;
-                }
-            }
-        }
 };
 
-int main(){
-    Dizionario dizionario;
+int main() {
+    Albero albero;
 
-    dizionario.insert(1,"Radu");
-    dizionario.insert(2,"Federico");
-    dizionario.insert(3,"Alessandro");
-    dizionario.insert(4,"Gioele");
-    dizionario.insert(5,"Lorenzo");
+    albero.aggiungiNodo("paperino", -1);
+    //Figli di paperino
+    albero.aggiungiNodo("qui", 0);
+    albero.aggiungiNodo("quo", 0);
+    albero.aggiungiNodo("qua", 0);
+    //Figli di qui
+    albero.aggiungiNodo("qui_f1", 1);
+    albero.aggiungiNodo("qui_f2", 1);
+    albero.aggiungiNodo("qui_f3", 1);
+    //Figli di quo
+    albero.aggiungiNodo("quo_f1", 2);
+    albero.aggiungiNodo("quo_f2", 2);
+    albero.aggiungiNodo("quo_f3", 2);
+    //Figli di qua
+    albero.aggiungiNodo("qua_f1", 3);
+    albero.aggiungiNodo("qua_f2", 3);
+    albero.aggiungiNodo("qua_f3", 3);
 
-    dizionario.cancel(4);
-
-    dizionario.print();
-
+    albero.stampaAlbero();
+    
     return 0;
 }

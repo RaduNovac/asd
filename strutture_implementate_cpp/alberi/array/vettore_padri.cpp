@@ -1,4 +1,4 @@
-//Dizionari implementati con array ordinati versione vecchia MA FUNZIONA| ASD in C++
+//Albero implementato con il vettore dei padri | ASD in C++
 
 /* 
     g++ vettore_padri.cpp -o vettore_padri
