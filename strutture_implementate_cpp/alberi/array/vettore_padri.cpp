@@ -1,4 +1,4 @@
-//Albero implementato con il vettore dei padri | ASD in C++
+//Alberi implementati con il vettore dei padri | ASD in C++
 
 /* 
     g++ vettore_padri.cpp -o vettore_padri
@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <list>
 
 using namespace std;
 
@@ -62,7 +63,25 @@ class Albero {
             }
         }
         //Figli
+        list<Nodo> figli(int v){
+            list<Nodo> l;
 
+            for(int i = 0; i < length; i++){
+                if(P[i].parent == v){
+                    l.push_back(P[i]);
+                }
+            }
+
+            return l;
+        }
+
+        void printFigli(list<Nodo> l){
+            cout << "Lista dei figli:\n";
+
+            for (auto i : l) {
+                cout << "Info: " << i.info << ", parent: " << i.parent << endl;
+            }
+        }
 };
 
 int main() {
@@ -88,5 +107,7 @@ int main() {
 
     albero.stampaAlbero();
     
+    albero.printFigli(albero.figli(2));
+
     return 0;
 }
