@@ -39,7 +39,7 @@ class Albero {
             list<Nodo> l;
 
             Nodo *iterator = v.left_child;
-            
+
             while(iterator != nullptr){
                 l.push_back(*iterator);
                 iterator = iterator->right_sib;
@@ -67,7 +67,7 @@ int main() {
     nodo_3.Key = "E";
     nodo_4.Key = "R";
     nodo_5.Key = "O";
-    
+
     //root
     albero.root = &root;
     root.left_child = &nodo_1;
