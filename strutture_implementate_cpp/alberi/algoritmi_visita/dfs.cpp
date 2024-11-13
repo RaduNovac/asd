@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <stack>
 
 using namespace std;
 
@@ -57,8 +58,45 @@ class Albero {
         }
 };
 
-void visita_dfs(){
+void visitaDFS(Nodo *root){
+    // Se l'albero è vuoto, termina
+    if (root == nullptr) {
+        return;
+    }
+
+    // Creo uno stack per la visita
+    stack<Nodo*> s;
     
+    // Inserisco la radice nello stack
+    s.push(root);
+    
+    // Continuo finché lo stack non è vuoto
+    while (!s.empty()) {
+        // Estraggo il nodo in cima allo stack
+        Nodo* current = s.top();
+        s.pop();
+        
+        // Visito il nodo corrente
+        cout << current->Key << " ";
+        
+        // Inserisco prima il figlio destro e poi il sinistro
+        // (così il sinistro verrà visitato prima, essendo in cima allo stack)
+        if (current->right != nullptr) {
+            s.push(current->right);
+        }
+        if (current->left != nullptr) {
+            s.push(current->left);
+        }
+    }
+    cout << endl;
+}
+
+void visitaDFS_ric(Nodo *r){
+    if(r != nullptr){
+        cout << r->Key << endl;
+        visitaDFS_ric(r -> left);
+        visitaDFS_ric(r -> right);
+    }
 }
 
 int main() {
@@ -92,6 +130,8 @@ int main() {
     albero.root = &root;
 
     albero.printFigli(albero.figli(nodo_1));
+
+    visitaDFS_ric(albero.root);
 
     return 0;
 }
