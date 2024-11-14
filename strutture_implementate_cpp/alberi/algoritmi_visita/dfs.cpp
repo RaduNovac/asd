@@ -79,8 +79,6 @@ void visitaDFS(Nodo *root){
         // Visito il nodo corrente
         cout << current->Key << " ";
         
-        // Inserisco prima il figlio destro e poi il sinistro
-        // (così il sinistro verrà visitato prima, essendo in cima allo stack)
         if (current->right != nullptr) {
             s.push(current->right);
         }

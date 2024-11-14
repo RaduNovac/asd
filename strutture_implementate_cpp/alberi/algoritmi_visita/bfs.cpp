@@ -67,20 +67,18 @@ void visitaBFS(Nodo *root){
     // Creo una coda per la visita
     queue<Nodo*> q;
     
-    // Inserisco la radice nella radice
+    // Inserisco la radice nella coda
     q.push(root);
     
-    // Continuo finché la coda non è vuoto
+    // Continuo finché la coda non è vuota
     while (!q.empty()) {
-        // Estraggo il nodo in cima allo stack
+        // Estraggo il nodo in cima alla coda
         Nodo* current = q.front();
         q.pop();
         
         // Visito il nodo corrente
         cout << current->Key << " ";
         
-        // Inserisco prima il figlio destro e poi il sinistro
-        // (così il sinistro verrà visitato prima, essendo in cima allo stack)
         if (current->left != nullptr) {
             q.push(current->left);
         }
