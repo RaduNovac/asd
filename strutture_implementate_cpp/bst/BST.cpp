@@ -1,8 +1,8 @@
-//Visita di alberi implementata con i puntatori ai figli, quindi uso come base quella implementazione | ASD in C++
+//Binary Search Tree | ASD in C++
 
 /* 
-    g++ dfs.cpp -o dfs
-    ./dfs
+    g++ BST.cpp -o BST
+    ./BST
 */
 
 #include <iostream>
