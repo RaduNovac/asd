@@ -93,9 +93,33 @@ void visitaDFS(Nodo *root){
 
 void visitaDFS_ric(Nodo *r){
     if(r != nullptr){
-        cout << r->Key << endl;
+        cout << r->Key << " ";
         visitaDFS_ric(r -> left);
         visitaDFS_ric(r -> right);
+    }
+}
+
+void visitaDFS_ric_preordine(Nodo *r){
+    if(r != nullptr){
+        cout << r->Key << " ";
+        visitaDFS_ric_preordine(r -> left);
+        visitaDFS_ric_preordine(r -> right);
+    }
+}
+
+void visitaDFS_ric_simmetrica(Nodo *r){
+    if(r != nullptr){
+        visitaDFS_ric_simmetrica(r -> left);
+        cout << r->Key << " ";
+        visitaDFS_ric_simmetrica(r -> right);
+    }
+}
+
+void visitaDFS_ric_postordine(Nodo *r){
+    if(r != nullptr){
+        visitaDFS_ric_postordine(r -> left);
+        visitaDFS_ric_postordine(r -> right);
+        cout << r->Key << " ";
     }
 }
 
@@ -131,7 +155,14 @@ int main() {
 
     albero.printFigli(albero.figli(nodo_1));
 
+    visitaDFS(albero.root);
     visitaDFS_ric(albero.root);
+    cout << endl;
+    visitaDFS_ric_preordine(albero.root);
+    cout << endl;
+    visitaDFS_ric_simmetrica(albero.root);
+    cout << endl;
+    visitaDFS_ric_postordine(albero.root);
 
     return 0;
 }
