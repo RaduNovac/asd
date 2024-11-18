@@ -40,10 +40,10 @@ void insertionSort(int arr[], int n) {
 
 int main() {
     // Vettore di esempio
-    int vettore[] = {5, 2, 7, 3, 1};
+    int vettore[] = {5, 2, 7, 3, 1, 6, 9, 4, 8};
     int lunghezza = sizeof(vettore) / sizeof(vettore[0]);
 
-    //cout << "Vettore originale: ";
+    cout << "Vettore originale: ";
     stampaVettore(vettore, lunghezza);
 
     // Applica l'ordinamento al vettore
