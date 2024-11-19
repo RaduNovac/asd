@@ -1,8 +1,8 @@
-//Insertion sort | ASD in C++
+//Counting sort | ASD in C++
 
 /* 
-    g++ insertion_sort.cpp -o insertion_sort
-    ./insertion_sort
+    g++ counting_sort.cpp -o counting_sort
+    ./counting_sort
 */
 #include <iostream>
 #include <vector>
@@ -18,116 +18,59 @@ void stampaVettore(int arr[], int n) {
   cout << endl;
 }
 
-int max_element(int arr[]){
-    int lunghezza = sizeof(arr) / sizeof(arr[0]);
+int max_value(int A[], int n){
+  int max = A[0];
 
-    cout << "lunghezza: " << lunghezza <<endl;
-
-    return 0;
-}
-
-// Funzione per implementare l'insertion sort
-void insertionSort(int arr[], int n) {
-  // Dichiaro le variabili che mi servono
-  int i, j, chiave;
-
-  for (i = 1; i < n;
-       i++) { // Il ciclo verrà eseguito n-1 volte e parte dal secondo elemento
-    chiave = arr[i]; // La chiave è il valore puntato dal cursore i, che è il
-                     // primo elemento della parte non ordinata
-    j = i - 1; // j indica l'elemento prima di i, quindi fa parte della parte
-               // ordinata
-
-    // Sposta gli elementi del vettore che sono maggiori della chiave in avanti
-    // di una posizione
-    while (j >= 0 && arr[j] > chiave) {
-      arr[j + 1] = arr[j];
-      j = j - 1;
+  for(int i = 1; i < n; i++){//Parto da 1 perché 0 l'ho già messo in max
+    if(A[i] > max){
+      max = A[i];
     }
-
-    // Ricopio la chiave nella posizione corretta
-    arr[j + 1] = chiave;
-
-    // Stampo l'array ad ogni passaggio per debug
-    cout << "Al passaggio " << i << " l'array e' il seguente: ";
-    stampaVettore(arr, n);
   }
-}
 
-//Heap Sort
-void max_heapify(int arr[], int n, int i) {
-	int largest = i;          // Inizializza il nodo più grande come radice
-	int left = 2 * i + 1;     // Figlio sinistro
-	int right = 2 * i + 2;    // Figlio destro
-
-	// Se il figlio sinistro è più grande della radice
-	if (left < n && arr[left] > arr[largest]) {
-			largest = left;
-	}
-
-	// Se il figlio destro è più grande della radice
-	if (right < n && arr[right] > arr[largest]) {
-			largest = right;
-	}
-
-	// Se il nodo più grande non è la radice
-	if (largest != i) {
-			swap(arr[i], arr[largest]);  // Scambia la radice con il nodo più grande
-			max_heapify(arr, n, largest);    // Richiama heapify sul sotto-albero
-	}
-}
-
-// Funzione principale di Heap Sort
-void heapSort(int arr[], int n) {
-	// Costruisce il max heap
-	for (int i = n / 2 - 1; i >= 0; i--) {
-			max_heapify(arr, n, i);
-	}
-
-	// Estrae uno a uno gli elementi dall'heap
-	for (int i = n - 1; i > 0; i--) {
-			swap(arr[0], arr[i]);  // Sposta la radice corrente alla fine
-			max_heapify(arr, i, 0);    // Richiama heapify sulla radice ridotta
-	}
+  return max;
 }
 //Counting sort
-void countingSort(vector<int>& arr) {
-		//int max_element = *max_element(arr.begin(), arr.end()); // trova il valore massimo dell'array
-		//vector<int> count(max_element+1, 0); // crea un array di conteggio con una dimensione pari al valore massimo + 1
-        vector<int> count(1, 0);
-		// contare il numero di occorrenze di ciascun elemento
-		for (int i = 0; i < arr.size(); i++) {
-				count[arr[i]]++;
-		}
+void counting_sort(int A[], int B[], int n, int k) {//k è il valore massimo dell'array
+    // Crea array di conteggio
+    int C[k + 1], i, j;
+    
+    // Setto C tutto a 0
+    for(i = 0; i <= k; i++){
+      C[i] = 0;
+    }
 
-		// riempie l'array originale nell'ordine corretto
-		int j = 0;
-		for (int i = 0; i < count.size(); i++) {
-				while (count[i] > 0) {
-						arr[j] = i;
-						j++;
-						count[i]--;
-				}
-		}
+    // Conto quante volte occorre l'elemento j-esimo in A
+    for(j = 0; j < n; j++){
+      C[A[j]]++;
+    }
+
+    // Somme prefisse
+    for(i = 1; i <= k; i++){
+      C[i] = C[i] + C[i - 1];
+    }
+
+    //Sistemo gli elementi in B
+    for (j = n - 1; j >= 0; j--) {
+        B[C[A[j]] - 1] = A[j];
+        C[A[j]]--;
+    }
 }
 
 int main() {
     // Vettore di esempio
-    int vettore[] = {5, 2, 7, 3, 1};
+    int vettore[] = {5, 2, 7, 3, 10, 1, 6, 9, 4, 8,};
     int lunghezza = sizeof(vettore) / sizeof(vettore[0]);
-
-    //cout << "Vettore originale: ";
-    //stampaVettore(vettore, lunghezza);
+    int risultato[lunghezza];
+    int massimo = max_value(vettore, lunghezza);
+    
+    cout << "Vettore originale: ";
+    stampaVettore(vettore, lunghezza);
 
     // Applica l'ordinamento al vettore
-    //insertionSort(vettore, lunghezza);
-    
-    //heapSort(vettore, lunghezza);
+    counting_sort(vettore, risultato, lunghezza, massimo);
 	
-    //cout << "Vettore ordinato: ";
-    //stampaVettore(vettore, lunghezza);
-
-    int x = max_element(vettore);//non va
-
+    cout << "Vettore ordinato: ";
+    stampaVettore(risultato, lunghezza);
+    
   return 0;
 }
