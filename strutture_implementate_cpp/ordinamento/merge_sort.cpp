@@ -1,8 +1,8 @@
-//Insertion sort | ASD in C++
+//Merge sort | ASD in C++
 
 /* 
-    g++ insertion_sort.cpp -o insertion_sort
-    ./insertion_sort
+    g++ merge_sort.cpp -o merge_sort
+    ./merge_sort
 */
 #include <iostream>
 #include <vector>
