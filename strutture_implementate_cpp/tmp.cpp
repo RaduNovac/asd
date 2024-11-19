@@ -1,113 +1,75 @@
-//Dizionari implementati con record e puntatori | ASD in C++
-
 /* 
     g++ tmp.cpp -o tmp
     ./tmp
 */
-
 #include <iostream>
-#include <string>
-#include <list>
 
 using namespace std;
 
-struct Node {
-    string info;
-    int parent;
-};
+// Funzione per stampare un vettore
+void stampaVettore(int arr[], int n) {
+  for (int i = 0; i < n; i++) {
+    cout << arr[i] << " ";
+  }
 
-typedef Node Nodo;
+  cout << endl;
+}
 
-class Albero {
-    public:
-        Nodo* P;
-        int length;
+//Heap Sort
+void max_heapify(int A[], int n, int i) {//n è la heap_size, i è il nodo radice del sottoalbero
+	int massimo = i;          // Inizializza il nodo più grande come radice
+	int l = 2 * i + 1;     // Figlio sinistro
+	int r = 2 * i + 2;    // Figlio destro
 
-        Albero(){
-            length = 0;
-            P = (Nodo*) malloc(length * sizeof(Nodo));
-        }
+	// Se il figlio sinistro è più grande della radice
+	if (l < n && A[l] > A[massimo]) {
+			massimo = l;
+	}
 
-        //Stampare l'albero
-        void stampaAlbero(){
-            for(int i = 0;i < length;i++){
-                cout << "Indice: " << i << "\nP.info = " << P[i].info << "\nP.parent = " << P[i].parent << endl << endl;
-            }
-        }
+	// Se il figlio destro è più grande della radice
+	if (r < n && A[r] > A[massimo]) {
+			massimo = r;
+	}
 
-        //Aggiungere un nodo
-        void aggiungiNodo(string info, int parent){
-            //Aumento di uno la grandezza
-            length++;
+	// Se il nodo più grande non è la radice
+	if (i != massimo) {
+			swap(A[i], A[massimo]);  // Scambia la radice con il nodo più grande
+			max_heapify(A, n, massimo);    // Richiama heapify sul sotto-albero
+	}
+}
 
-            //Rialloco il vettore con una grandezza in più per il nuovo nodo
-            Nodo* TMP = (Nodo*)realloc(P,(length + 1) * sizeof(Nodo));
+void build_max_heap(int A[], int n){
+    // Costruisce il max heap
+	for (int i = n / 2 - 1; i >= 0; i--) {
+			max_heapify(A, n, i);
+	}
+}
 
-            if(TMP != NULL){
-                //Ricopio i valori dentro al nuovo vettore
-                P = TMP;
+// Funzione principale di Heap Sort
+void heapSort(int A[], int n) {
+	build_max_heap(A, n);
 
-                //Aggiungo in coda il nuovo nodo
-                P[length - 1].info = info;
-                P[length - 1].parent = parent;
-            }
-        }
-
-        //Padre
-        Nodo* padre(int v){
-            if(P[v].parent == -1){
-                return nullptr;
-            }
-            else{
-                return &P[P[v].parent];
-            }
-        }
-        //Figli
-        list<Nodo> figli(int v){
-            list<Nodo> l;
-
-            for(int i = 0; i < length; i++){
-                if(P[i].parent == v){
-                    l.push_back(P[i]);
-                }
-            }
-
-            return l;
-        }
-
-        void printFigli(list<Nodo> l){
-            cout << "Lista dei figli:\n";
-
-            for (auto i : l) {
-                cout << "Info: " << i.info << ", parent: " << i.parent << endl;
-            }
-        }
-};
+	// Estrae uno a uno gli elementi dall'heap
+	for (int i = n - 1; i > 0; i--) {
+			swap(A[0], A[i]);  // Sposta la radice corrente alla fine
+			max_heapify(A, i, 0);    // Richiama heapify sulla radice ridotta
+	}
+}
 
 int main() {
-    Albero albero;
+    // Vettore di esempio
+    int vettore[] = {5, 2, 7, 3, 10, 1, 6, 9, 4, 8,};
+    int lunghezza = sizeof(vettore) / sizeof(vettore[0]);
 
-    albero.aggiungiNodo("paperino", -1);
-    //Figli di paperino
-    albero.aggiungiNodo("qui", 0);
-    albero.aggiungiNodo("quo", 0);
-    albero.aggiungiNodo("qua", 0);
-    //Figli di qui
-    albero.aggiungiNodo("qui_f1", 1);
-    albero.aggiungiNodo("qui_f2", 1);
-    albero.aggiungiNodo("qui_f3", 1);
-    //Figli di quo
-    albero.aggiungiNodo("quo_f1", 2);
-    albero.aggiungiNodo("quo_f2", 2);
-    albero.aggiungiNodo("quo_f3", 2);
-    //Figli di qua
-    albero.aggiungiNodo("qua_f1", 3);
-    albero.aggiungiNodo("qua_f2", 3);
-    albero.aggiungiNodo("qua_f3", 3);
+    cout << "Vettore originale: ";
+    stampaVettore(vettore, lunghezza);
 
-    albero.stampaAlbero();
+    // Applica l'ordinamento al vettore
     
-    albero.printFigli(albero.figli(2));
+    heapSort(vettore, lunghezza);
+	
+    cout << "Vettore ordinato: ";
+    stampaVettore(vettore, lunghezza);
 
-    return 0;
+  return 0;
 }
