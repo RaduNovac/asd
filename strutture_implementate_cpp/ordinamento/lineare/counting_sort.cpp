@@ -5,7 +5,6 @@
     ./counting_sort
 */
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
