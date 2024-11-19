@@ -1,4 +1,4 @@
-//Merge sort | ASD in C++
+//Quick sort | ASD in C++
 
 /* 
     g++ quick_sort.cpp -o quick_sort
