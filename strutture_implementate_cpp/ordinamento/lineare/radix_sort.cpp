@@ -5,6 +5,7 @@
     ./radix_sort
 */
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -28,6 +29,11 @@ int max_value(int A[], int n){
 
   return max;
 }
+
+int cifra(int x, int n, int i){
+  return (x/(int)pow(n, i)) % n;
+}
+
 //Counting sort
 void counting_sort(int A[], int n, int k) {//k è il valore massimo dell'array
     // Crea array di conteggio
@@ -39,9 +45,9 @@ void counting_sort(int A[], int n, int k) {//k è il valore massimo dell'array
       C[i] = 0;
     }
 
-    // Conto quante volte occorre l'elemento j-esimo in A
+    // Conto quante volte occorre la cifra j-esima in A
     for(j = 0; j < n; j++){
-      C[A[j]]++;
+      C[cifra(A[j], k, i)]++;
     }
 
     // Somme prefisse
@@ -51,8 +57,8 @@ void counting_sort(int A[], int n, int k) {//k è il valore massimo dell'array
 
     //Sistemo gli elementi in B
     for (j = n - 1; j >= 0; j--) {
-        B[C[A[j]] - 1] = A[j];
-        C[A[j]]--;
+        B[C[cifra(A[j], k, i)]] = A[j];
+        C[cifra(A[j], k, i)]--;
     }
     //Copio B in A
     for(i = 0; i < n; i++){
@@ -61,16 +67,15 @@ void counting_sort(int A[], int n, int k) {//k è il valore massimo dell'array
 }
 
 void radix_sort(int A[], int d, int k){
-  for(int i = 1;i < d; i++){
+  for(int i = 0; i < d; i++){
     counting_sort(A, k, i);
   }
 }
 
 int main() {
     // Vettore di esempio
-    int vettore[] = {523, 231, 743, 367, 1017, 124, 698, 976, 464, 821,};
+    int vettore[] = {326, 453, 608, 835, 751, 435, 704, 690};
     int lunghezza = sizeof(vettore) / sizeof(vettore[0]);
-    int risultato[lunghezza];
     int massimo = max_value(vettore, lunghezza);
     
     cout << "Vettore originale: ";
@@ -80,7 +85,7 @@ int main() {
     radix_sort(vettore, lunghezza, massimo);
 	
     cout << "Vettore ordinato: ";
-    stampaVettore(risultato, lunghezza);
+    stampaVettore(vettore, lunghezza);
     
   return 0;
 }
