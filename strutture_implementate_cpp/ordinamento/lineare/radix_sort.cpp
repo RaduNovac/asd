@@ -10,79 +10,78 @@
 using namespace std;
 
 // Funzione per stampare un vettore
-void stampaVettore(int arr[], int n) {
+void stampaVettore(int A[], int n) {
   for (int i = 0; i < n; i++) {
-    cout << arr[i] << " ";
+    cout << A[i] << " ";
   }
 
   cout << endl;
 }
 
-int max_value(int A[], int n){
-  int max = A[0];
+//La funzione max_value non serve più perché il range sarò da 0 a 9, sempre!
 
-  for(int i = 1; i < n; i++){//Parto da 1 perché 0 l'ho già messo in max
-    if(A[i] > max){
-      max = A[i];
-    }
-  }
-
-  return max;
-}
-
-int cifra(int x, int n, int i){
-  return (x/(int)pow(n, i)) % n;
+/*
+  x: numero dal quale estrarre la cifra 
+  n: base numerica 
+  i: posizione cifra da estrarre, 0 cifra meno significativa (più a dx)
+*/
+int cifra(int x, int i){
+  return (x/(int)pow(10, i)) % 10;
 }
 
 //Counting sort
-void counting_sort(int A[], int n, int k) {//k è il valore massimo dell'array
-    // Crea array di conteggio
-    int C[k + 1], i, j;
-    int B[n];
+/*
+  A è il vettore
+  k è il numero di cifre dei numeri
+  i è la posizione della cifra da ordinare
+  n è la lunghezza del vettore
+*/
+void counting_sort(int A[], int i, int n) {
+    int C[10] = {0};//Siccome le cifre da ordinare andranno da 0 a 9, il vettore avrà per forza 10 elementi
+    int B[n];//vettore di appoggio che alla fine copierò in A
     
-    // Setto C tutto a 0
-    for(i = 0; i <= k; i++){
-      C[i] = 0;
-    }
-
     // Conto quante volte occorre la cifra j-esima in A
-    for(j = 0; j < n; j++){
-      C[cifra(A[j], k, i)]++;
+    for(int j = 0; j < n; j++){
+        C[cifra(A[j], i)]++;
     }
 
     // Somme prefisse
-    for(i = 1; i <= k; i++){
-      C[i] = C[i] + C[i - 1];
+    for(int j = 1; j < 10; j++){
+        C[j] += C[j - 1];
     }
 
-    //Sistemo gli elementi in B
-    for (j = n - 1; j >= 0; j--) {
-        B[C[cifra(A[j], k, i)]] = A[j];
-        C[cifra(A[j], k, i)]--;
+    // Sistemo gli elementi in B
+    for (int j = n - 1; j >= 0; j--) {
+        B[C[cifra(A[j], i)] - 1] = A[j];
+        C[cifra(A[j], i)]--;
     }
-    //Copio B in A
-    for(i = 0; i < n; i++){
-      A[i] = B[i];
+
+    // Copio B in A
+    for(int j = 0; j < n; j++){
+        A[j] = B[j];
     }
 }
-
-void radix_sort(int A[], int d, int k){
+/*
+  Tutti i numeri devono avere lo stesso numero di cifre!!!
+  d è il numero di cifre dei numeri 
+  k è il valore massimo di A 
+  n è la grandezza A
+*/
+void radix_sort(int A[], int d, int n){
   for(int i = 0; i < d; i++){
-    counting_sort(A, k, i);
+    counting_sort(A, i, n);
   }
 }
 
 int main() {
-    // Vettore di esempio
     int vettore[] = {326, 453, 608, 835, 751, 435, 704, 690};
     int lunghezza = sizeof(vettore) / sizeof(vettore[0]);
-    int massimo = max_value(vettore, lunghezza);
     
     cout << "Vettore originale: ";
     stampaVettore(vettore, lunghezza);
 
     // Applica l'ordinamento al vettore
-    radix_sort(vettore, lunghezza, massimo);
+    radix_sort(vettore, 3, lunghezza);
 	
     cout << "Vettore ordinato: ";
     stampaVettore(vettore, lunghezza);
