@@ -4,6 +4,8 @@ using namespace std;
 
 struct Node {
     int Key;
+
+    Node(): Key(-1){}
 };
 
 typedef Node Nodo;
@@ -32,7 +34,7 @@ int main(){
     n3 ->Key = 2;
     Nodo* n4 = new Nodo;
     n4 ->Key = 3;
-    Nodo* n5 = new Nodo;
+    /*Nodo* n5 = new Nodo;
     n5 ->Key = 4;
     Nodo* n6 = new Nodo;
     n6 ->Key = 5;
@@ -41,7 +43,7 @@ int main(){
     Nodo* n8 = new Nodo;
     n8 ->Key = 7;
     Nodo* n9 = new Nodo;
-    n9 ->Key = 8;
+    n9 ->Key = 8;*/
     Nodo* n10 = new Nodo;
     n10 ->Key = 9;
 
@@ -49,15 +51,15 @@ int main(){
     direct_address_insert(T, n2);
     direct_address_insert(T, n3);
     direct_address_insert(T, n4);
-    direct_address_insert(T, n5);
+    /*direct_address_insert(T, n5);
     direct_address_insert(T, n6);
     direct_address_insert(T, n7);
     direct_address_insert(T, n8);
-    direct_address_insert(T, n9);
+    direct_address_insert(T, n9);*/
     direct_address_insert(T, n10);
 
     direct_address_delete(T, *n3);
-    direct_address_delete(T, *n7);
+    //direct_address_delete(T, *n7);
 
     for(int i = 0; i < SIZE; i++) {
         if(T[i] != nullptr) {
