@@ -1,4 +1,5 @@
 //Programmazione dinamica - lcs | ASD in C++
+//T(n) top_down = Theta(m * n), bottom_up = Theta(m * n)
 
 /* 
     g++ lcs.cpp -o lcs
@@ -19,13 +20,13 @@ int max(int a, int b){
         return b;
     }
 }
-
+//Soluzione più completa che calcola tutti i sottoproblema, anche quelli non necessari. Preferibile la top down
 void bottom_up_lcs(const string& X, const string& Y, vector< vector<int> >& b, vector< vector<int> >& c) {
     int m = X.length(), n = Y.length();
 
     // Inizializzazione degli array, tutti inizializzati a 0
-    c = vector< vector<int> >(m + 1, vector<int>(n + 1, 0));
-    b = vector< vector<int> >(m, vector<int>(n, 0));
+    c = vector< vector<int> >(m + 1, vector<int>(n + 1, 0));// Conterrà effettivamente la lunghezza delle sottosequenza
+    b = vector< vector<int> >(m, vector<int>(n, 0));// Conterrà le indicazioni per ricostruire il percorso della soluzione
 
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
@@ -47,9 +48,8 @@ void bottom_up_lcs(const string& X, const string& Y, vector< vector<int> >& b, v
     }
 }
 
-// Ritorna l'LCS tra le due stringhe X e Y
+// Ritorna l'LCS tra le due stringhe X e Y, soluzione preferibile in quanto calcola solo i sottoproblemi necessari
 int top_down_lcs(string &X, string &Y, int m, int n) {
-  
     // Caso base: se almeno una stringa è vuota vuol dire che l'LCS è 0
     if (m == 0 || n == 0)
         return 0;
