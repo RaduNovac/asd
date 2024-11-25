@@ -34,10 +34,5 @@ class Albero {
 };
 
 int main() {
-    int arr[] = {1, 3, 5, 7, 9};  // Array di interi
-    vector<int> vettore(arr, arr + sizeof(arr) / sizeof(arr[0]));
-
-    Albero albero = build_BST(vettore);
-
     return 0;
 }
