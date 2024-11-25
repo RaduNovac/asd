@@ -40,7 +40,7 @@ int memoized_cut_rod_aux(int p[], int j, int r[]){//Complessità: Theta(n^2)
     return r[j];
 }
 
-int top_down_memoized_cut_rod(int p[], int n){
+int top_down_memoized_cut_rod(int p[], int n){//Calcola solo i sottoproblemi necessari
     int r[n];
 
     for(int i = 0; i < n; i++){
@@ -50,7 +50,7 @@ int top_down_memoized_cut_rod(int p[], int n){
     return memoized_cut_rod_aux(p, n, r);
 }
 
-int bottom_up_cut_rod(int p[], int n){
+int bottom_up_cut_rod(int p[], int n){//Calcola le soluzioni di tutti i sottoproblemi
     int r[n], s[n], q;
 
     r[0] = 0;
@@ -69,7 +69,6 @@ int bottom_up_cut_rod(int p[], int n){
 }
 
 //Queste funzioni non ci dicono dove tagliare, per sapere dove tagliare uso la seguente versione modificata della bottom up
-
 void ext_bottom_up_cut_rod(int p[], int n, int r[], int s[]){
     int q;
 
