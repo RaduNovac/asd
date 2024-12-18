@@ -74,7 +74,7 @@ void radix_sort(int A[], int d, int n){
 }
 
 int main() {
-    int vettore[] = {326, 453, 608, 835, 751, 435, 704, 690};
+    int vettore[] = {326, 453, 608, 835, 751, 435, 704, 690, 75};
     int lunghezza = sizeof(vettore) / sizeof(vettore[0]);
     
     cout << "Vettore originale: ";
