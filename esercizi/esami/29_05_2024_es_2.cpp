@@ -37,29 +37,38 @@ void riordina(vector<string>& arr){
 }
 
 void printArray(const vector<string>& arr) {
-    cout << "Array: [";
+    cout << "Array:\n";
     for (size_t i = 0; i < arr.size(); i++) {
         cout << arr[i];
         if (i < arr.size() - 1) {
             cout << ", " << endl;
         }
     }
-    cout << "]" << endl;
 }
 
 int main(){
     vector<string> arr;
 
+    arr.push_back("S123456");
     arr.push_back("S234567");
-    arr.push_back("S654321");
-    arr.push_back("S468101");
-    arr.push_back("S357911");
-    arr.push_back("S876543");
+    arr.push_back("S345678");
+    arr.push_back("S456789");
     arr.push_back("S567890");
-    arr.push_back("S111111");
-    arr.push_back("S999989");
-    arr.push_back("S556555");
-    arr.push_back("S353333");
+    arr.push_back("S678901");
+    arr.push_back("S789012");
+    arr.push_back("S890123");
+    arr.push_back("S901234");
+    arr.push_back("S012345");
+    arr.push_back("S111222");
+    arr.push_back("S222333");
+    arr.push_back("S333444");
+    arr.push_back("S444555");
+    arr.push_back("S555666");
+    arr.push_back("S666777");
+    arr.push_back("S777888");
+    arr.push_back("S888999");
+    arr.push_back("S999000");
+    arr.push_back("S000111");
 
     riordina(arr);
 
