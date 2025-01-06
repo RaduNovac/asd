@@ -52,10 +52,13 @@ PTree mergeBST(PTree T1, PTree T2) {
 
 // Funzione di utilità per stampare il BST in ordine inorder
 void inorderTraversal(PTree root) {
-    if (!root) return;
+    if(!root){
+        return;
+    }
     inorderTraversal(root->left);
     cout << root->key << " ";
     inorderTraversal(root->right);
+    
 }
 
 int main() {
@@ -73,6 +76,12 @@ int main() {
     T2->left->left = new TreeNode(11);
     T2->left->right = new TreeNode(14);
     T2->right->right = new TreeNode(23);
+
+    //Stampo i due alberi:
+    inorderTraversal(T1);
+    cout << endl;
+    inorderTraversal(T2);
+    cout << endl;
 
     // Unione dei due BST
     PTree mergedTree = mergeBST(T1, T2);
