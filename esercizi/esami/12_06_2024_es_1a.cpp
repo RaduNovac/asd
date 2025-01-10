@@ -26,9 +26,11 @@ PTree removeMin(PTree root) {
     if (!root->left) {
         PTree rightChild = root->right;
         delete root;
+        //cout << "deleted:" << root ->key << endl;
         return rightChild;
     }
     root->left = removeMin(root->left);
+    //cout << "returned:" << root ->key<< endl;
     return root;
 }
 
@@ -42,6 +44,7 @@ PTree mergeBST(PTree T1, PTree T2) {
     
     // Rimuovi il minimo da T2
     T2 = removeMin(T2);
+    //cout << "new root for t2:" << T2->key<<endl;
     
     // Imposta minNode come nuova radice
     minNode->left = T1;  // T1 è il figlio sinistro
@@ -63,19 +66,15 @@ void inorderTraversal(PTree root) {
 
 int main() {
     // Creazione di due BST di esempio
-    PTree T1 = new TreeNode(5);
-    T1->left = new TreeNode(2);
-    T1->right = new TreeNode(7);
-    T1->left->left = new TreeNode(1);
-    T1->left->right = new TreeNode(4);
-    T1->right->right = new TreeNode(10);
+    PTree T1 = new TreeNode(10);
+    T1->left = new TreeNode(8);
+    T1->left->left = new TreeNode(6);
+    T1->left->left->left = new TreeNode(3);
 
-    PTree T2 = new TreeNode(15);
-    T2->left = new TreeNode(13);
-    T2->right = new TreeNode(19);
-    T2->left->left = new TreeNode(11);
-    T2->left->right = new TreeNode(14);
-    T2->right->right = new TreeNode(23);
+    PTree T2 = new TreeNode(27);
+    T2->left = new TreeNode(20);
+    T2->left->left = new TreeNode(18);
+    T2->left->left->left = new TreeNode(15);
 
     //Stampo i due alberi:
     inorderTraversal(T1);
