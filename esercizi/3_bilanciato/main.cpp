@@ -6,25 +6,38 @@ struct node{
     int key;
     node* left;
     node* right;
-    node* p;
 
-    node(int k, node* padre = nullptr, node* sx = nullptr, node* dx = nullptr)
-            : key{k}, p{padre}, left{sx}, right{dx} {}
+    node(int k, node* sx = nullptr, node* dx = nullptr)
+            : key{k}, left{sx}, right{dx} {}
 }; typedef node* pnode;
 
 void three_bil_aux(pnode u, int &min, int &max){
-    int minsx, maxsx, mindx, maxdx;
+    int min_sx, max_sx, min_dx, max_dx;
 
-    if(u == nullptr){//Caso base
+    if(u == nullptr){
+        /*
+        Caso base, cioè caso oltre la foglia, setto 1 perché ho contato 1 in più,
+        quindi il conteggio parte effettivamente da -1.
+        */
         min = -1;
         max = -1;
     }
     else{
-        three_bil_aux(u -> left, minsx, maxsx);
-        three_bil_aux(u -> right, mindx, maxdx);
+        /*
+        Fa chiamate ricorsive fino alle foglie e poi da lì continua a calcolare i
+        cammini massimi e minimi percorrendoli al contrario fino alla radice.
+        Nel caso base io mi trovo oltre la foglia e tolgo -1 perché effettivamente
+        sono andato oltre di 1 nodo dalla struttura del mio albero avendogli passato
+        un nullptr.
+        */
+        three_bil_aux(u -> left, min_sx, max_sx);//Sottoalbero sx
+        three_bil_aux(u -> right, min_dx, max_dx);//Sottoalbero dx
+        
+        cout << "min_sx: " << min_sx << "\nmax_sx: " << max_sx << endl;
+        cout << "min_dx: " << min_dx << "\nmax_dx: " << max_dx << endl;
 
-        min = (minsx <= mindx ? minsx : mindx) + 1;//Aggiungo 1 perchè ho il passo dalla radice al sottoalbero
-        max = (mindx != maxdx ? maxdx : maxsx) + 1;
+        min = (min_sx <= min_dx ? min_sx : min_dx) + 1;//Aggiungo 1 perchè ho il passo dalla radice al sottoalbero
+        max = (max_sx <= max_dx ? max_dx : max_sx) + 1;
     }
 }
 
@@ -33,16 +46,18 @@ bool three_bil(pnode u){
 
     three_bil_aux(u,min,max);//Uso una funzione ausiliaria
 
+    cout << "min: " << min << "\nmax: " << max << endl;
+
     return (max - min <= 3);
 }
 
-int main() {
+int main(){
     //Albero 3_bilanciato
     node nodo_1{0};
-    node nodo_2{0,&nodo_1};
-    node nodo_3{0,&nodo_1};
-    node nodo_4{0,&nodo_2};
-    node nodo_5{0,&nodo_4};
+    node nodo_2{0};
+    node nodo_3{0};
+    node nodo_4{0};
+    node nodo_5{0};
 
     nodo_1.left = &nodo_2;
     nodo_1.right = &nodo_3;
@@ -59,8 +74,19 @@ int main() {
     nodo_7.left = &nodo_8;
     nodo_8.left = &nodo_9;
     nodo_9.left = &nodo_10;
+    //Albero da BIBBIA pag 73 - cammino terminabile
+    node nodo_11{0};
+    node nodo_12{0};
+    node nodo_13{0};
+    node nodo_14{0};
+    node nodo_15{0};
 
-    if(three_bil(&nodo_6)){
+    nodo_11.left = &nodo_12;
+    nodo_11.right = &nodo_13;
+    nodo_12.left = &nodo_14;
+    nodo_14.right = &nodo_15;
+
+    if(three_bil(&nodo_11)){
         cout << "e' 3 bilanciato!" << endl;
     }
     else{
