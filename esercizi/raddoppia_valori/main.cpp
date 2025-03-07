@@ -30,14 +30,15 @@ void trasforma(pnode u){
 
         u -> key = u -> key * 2;
         /*
-        Siccome questo nodo si trova su un livello pari, 
-        trasformiamo tutti i nodi su quel livello
+        Siccome questo nodo si trova su un livello pari, trasformiamo tutti i n
+        odi su quel livello facendo le chiamate ricorsivesu tutti i fratelli 
+        destri del nodo.
         */
 
         trasforma(u -> right_sib);
-
+        //Quando finisco con tutti i nodi su quel livello scendo di un livello
         iter = u -> left_child;
-
+        //Per ogni nodo sul livello scendo al livello successivo, così salto i livelli dispari
         while(iter != nullptr){
             trasforma(iter -> left_child);
             iter = iter -> right_sib;
