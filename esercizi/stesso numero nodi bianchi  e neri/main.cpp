@@ -10,14 +10,15 @@ using namespace std;
 
 struct node{
     int is_black;
+    int i = 0;
     node* left;
     node* right;
     node* p;
 
-    node(int k, node* sx = nullptr, node* dx = nullptr)
-        : is_black{k}, left{sx}, right{dx} {}
+    node(int k, int n, node* sx = nullptr, node* dx = nullptr)
+        : is_black{k}, i{n}, left{sx}, right{dx} {}
 }; typedef  node *pnode;
-//Versione mia
+//Versione mia, SBAGLIATA, non guarda se u è discendente di se stesso
 int discendenti_bianchi_neri_aux(pnode u, int& nodi){
     int sum = 0;
     /*
@@ -58,15 +59,18 @@ int discendenti_bianchi_neri(pnode u){
 //Versione prof
 void sameColorAux (pnode u, int& count, int& bianchi, int& neri){
     if(u){
-        int bsx = 0, nsx = 0, bdx = 0 , ndx = 0;
+        int b_sx = 0, n_sx = 0, b_dx = 0 , n_dx = 0;
 
-        sameColorAux (u -> left , count , bsx , nsx );
-        sameColorAux (u -> right , count , bdx , ndx );
+        sameColorAux (u -> left , count , b_sx , n_sx);
+        sameColorAux (u -> right , count , b_dx , n_dx);
 
-        bianchi = bsx + bdx + (u -> is_black == 0);
-        neri = nsx + ndx + (u -> is_black == 1);
+        bianchi = b_sx + b_dx + (u -> is_black == 0);
+        neri = n_sx + n_dx + (u -> is_black == 1);
+
         cout << "bianchi: " << bianchi << ";neri: " << neri << endl;
+
         if (bianchi == neri){
+            cout << "il nodo : " << u -> i << endl;
             count++;
         }
     }
@@ -83,21 +87,21 @@ int main() {
     int x = 0;
 
     //Padri, 1 = true = nero, 0 = false = bianco
-    node nodo_1{0};
-    node nodo_2{1};
-    node nodo_3{0};
-    node nodo_4{1};
-    node nodo_5{1};
-    node nodo_6{1};
-    node nodo_7{0};
-    node nodo_8{0};
-    node nodo_9{1};
-    node nodo_10{0};
-    node nodo_11{0};
-    node nodo_12{0};
-    node nodo_13{1};
-    node nodo_14{0};
-    node nodo_15{1};
+    node nodo_1{0,1};
+    node nodo_2{1,2};
+    node nodo_3{0,3};
+    node nodo_4{1,4};
+    node nodo_5{1,5};
+    node nodo_6{1,6};
+    node nodo_7{0,7};
+    node nodo_8{0,8};
+    node nodo_9{1,9};
+    node nodo_10{0,10};
+    node nodo_11{0,11};
+    node nodo_12{0,12};
+    node nodo_13{1,13};
+    node nodo_14{0,14};
+    node nodo_15{1,15};
     //Figli
     nodo_1.left = &nodo_2;
     nodo_1.right = &nodo_3;
@@ -106,7 +110,7 @@ int main() {
     nodo_3.left = &nodo_6;
     nodo_3.right = &nodo_7;
     nodo_4.left = &nodo_8;
-    nodo_4.right = &nodo_9;
+    //nodo_4.right = &nodo_9;
     nodo_5.left = &nodo_10;
     nodo_5.right = &nodo_11;
     nodo_6.left = &nodo_12;
