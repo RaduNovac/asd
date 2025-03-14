@@ -1,6 +1,6 @@
 /*
 Dato un albero binario di ricerca T, scrivere un algoritmo 
-efficiente che sostituisca il numero di elementi che occorrono una sola volta.
+efficiente che restituisca il numero di elementi che occorrono una sola volta.
 */
 #include <iostream>
 
@@ -49,7 +49,7 @@ pnode tree_successor(pnode x){
 }
 
 int contaDistinti (ptree t){
-    int numDistinti = 0, count = 1 , val ;
+    int numDistinti = 0, count = 1 , val;
     pnode iter;
 
     if (t -> root == nullptr ){
@@ -58,14 +58,14 @@ int contaDistinti (ptree t){
 
     iter = tree_minimum(t -> root);
     val = iter -> key;
-    iter = tree_successor (iter);
+    iter = tree_successor(iter);
 
     while(iter != nullptr){
-        if(iter -> key == val ){
+        if(iter -> key == val){
             count++;
         }
         else{
-            if (count == 1) {
+            if(count == 1){
                 numDistinti++;
             }
             count = 1;
@@ -73,9 +73,11 @@ int contaDistinti (ptree t){
         }
         iter = tree_successor(iter);
     }
-    if ( count == 1) {
+    //Controllo per il caso di albero con una sola foglia
+    if(count == 1){
         numDistinti++;
     }
+
     return numDistinti;
 }
 
