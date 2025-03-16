@@ -47,16 +47,16 @@ void eliminaMaggioriK(ptree t , int k){
     while (iter -> key != k){
         if(iter -> key > k){
             rimuovi (iter -> right);
-            iter -> right = nullptr ;
+            iter -> right = nullptr;
             temp = iter ;
 
-            transplant (t -> root ,iter ,iter -> left);
-            iter = iter -> left ;
+            transplant (t -> root, iter, iter -> left);
+            iter = iter -> left;
 
-            delete temp ;
+            delete temp;
             }
         else{
-            iter = iter -> right ;
+            iter = iter -> right;
         }
     }
     rimuovi(iter -> right);
