@@ -38,7 +38,7 @@ int less_height_aux(pnode r, int &contatore)
         int h_dx = less_height_aux(r -> right, contatore);
 
         //cout << "nodo: " << r -> key << ", h: " << max(h_sx, h_dx) << endl;
-        
+
         //Se l'altezza del sottoalbero radicato in r soddisfa la condizione
         if(r -> key <= max(h_sx, h_dx)){
             contatore++;
@@ -153,4 +153,6 @@ int main()
     //print_tree(t2 -> root);
 
     cout << "Less Height Counter t2 = " << less_height(t2 -> root) << endl;
+
+    return 0;
 }
