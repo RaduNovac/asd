@@ -33,15 +33,11 @@ int aux(pnode r, int k){
         int cx = aux(r -> center, k);
         int dx = aux(r -> right, k);
 
-        int somma = sx  + cx + dx;
-        //cout << "node: " << r -> key << ", somma: " << somma << endl;
-
-        if(somma > k){
-            //cout << "node: " << r -> key << ", set fruitful true! somma: " << somma << endl;
+        if(sx  + cx + dx > k){
             r -> fruitful = true;
         }
 
-        return somma + r -> key;
+        return sx  + cx + dx + r -> key;
     }
 
     return 0;
