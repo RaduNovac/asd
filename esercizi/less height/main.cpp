@@ -38,11 +38,15 @@ int less_height_aux(pnode r, int &contatore)
         int h_dx = less_height_aux(r -> right, contatore);
 
         //cout << "nodo: " << r -> key << ", h: " << max(h_sx, h_dx) << endl;
+        
         //Se l'altezza del sottoalbero radicato in r soddisfa la condizione
         if(r -> key <= max(h_sx, h_dx)){
             contatore++;
         }
-        //salgo di un livello sull'albero
+        /*
+        salgo di un livello sull'albero e sommo 1 all'altezza del nodo, 
+        che è il massimo tra le altezze dei sottoalberi dx ed sx
+        */
         return 1 + max(h_sx, h_dx);
     }
     else{
