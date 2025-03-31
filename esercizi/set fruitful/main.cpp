@@ -36,8 +36,12 @@ int aux(pnode r, int k){
         if(sx  + cx + dx > k){
             r -> fruitful = true;
         }
-
-        return sx  + cx + dx + r -> key;
+        /*
+        Sommo key perché al suo nodo superiore devo ritornare la somma dei
+        suoi sottoalberi + il valore della sua chiave, altrimenti escluderei
+        un valore e sarebbe sbagliato!
+        */
+        return sx  + cx + dx + r -> key; 
     }
 
     return 0;
