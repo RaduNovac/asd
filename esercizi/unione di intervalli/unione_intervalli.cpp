@@ -26,7 +26,7 @@ bool unione(vector<pair<int, int>>& arr, pair<int, int>& ris) {
     e ritorna false. True altrimenti
     */
     while (i < arr.size() && endtemp + 1 >= arr[i].first){
-        if (arr[i].second > endtemp) {
+        if(arr[i].second > endtemp) {
             endtemp = arr[i].second;
         }
         i++;
