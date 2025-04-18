@@ -4,7 +4,7 @@
 using namespace std;
 
 vector<int> mergeBST(vector<int>& arr1, vector<int>& arr2, int val){
-    vector<int> res(2*arr1.size() + 1);
+    vector<int> res(2 * arr1.size() + 1);
 
     int n = arr1.size();
 
@@ -36,15 +36,16 @@ int main(){
     T1.push_back(120);
 
     vector<int> T2;
-    T1.push_back(200);
-    T1.push_back(178);
-    T1.push_back(230);
-    T1.push_back(160);
-    T1.push_back(180);
-    T1.push_back(227);
-    T1.push_back(239);
+    T2.push_back(200);
+    T2.push_back(178);
+    T2.push_back(230);
+    T2.push_back(160);
+    T2.push_back(180);
+    T2.push_back(227);
+    T2.push_back(239);
 
-    vector<int> T3 = mergeBST(T1, T2, 150);
+    vector<int> T3;
+    T3 = mergeBST(T1, T2, 150);
 
     print_vector(T1);
     print_vector(T2);
