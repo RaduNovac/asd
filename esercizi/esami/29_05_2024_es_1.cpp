@@ -18,6 +18,24 @@ vector<int> mergeBST(vector<int>& arr1, vector<int>& arr2, int val){
     return res;
 }
 
+/*
+vector<int> mergeBST2(vector<int>& arr1, vector<int>& arr2, int val){
+    return {arr1.begin(), arr1.end(), val, arr2.begin(), arr2.end()};
+}
+*/
+
+vector<int> mergeBST3(vector<int>& arr1, vector<int>& arr2, int val){
+    vector<int> res;
+    res.reserve(arr1.size() + arr2.size() + 1); // per efficienza
+
+    res.insert(res.end(), arr1.begin(), arr1.end());
+    res.push_back(val);
+    res.insert(res.end(), arr2.begin(), arr2.end());
+
+    return res;
+}
+
+
 void print_vector(vector<int> T){
     for(int i = 0; i < T.size(); i++){
         cout << T[i] << "; ";
