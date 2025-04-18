@@ -1,38 +1,27 @@
 #include <iostream>
 #include <vector>
+#include <math.h>
 
 using namespace std;
 
-vector<int> mergeBST(vector<int>& arr1, vector<int>& arr2, int val){
-    vector<int> res(2 * arr1.size() + 1);
+vector<int> mergeBST(vector<int>& t1, vector<int>& t2, int val){
+    int heapsize = t1.size();
+    
+    vector<int> t(heapsize * 2 + 1);
 
-    int n = arr1.size();
-
-    res[0] = val;
-
-    for(int i = 0; i < n; i++){
-        res[i + 1] = arr1[i];
-        res[i + 1 + n] = arr2[i];
+    int h = log2(heapsize + 1);
+    t[0] = val;
+    int x = 0;
+    for (int i = 0; i < h; i++)
+    {
+        for (int j = 0; j < pow(2, i); j++)
+        {
+            t[x + pow(2, i)] = t1[x];
+            t[x + pow(2, i) * 2] = t2[x];
+            x++;
+        }
     }
-
-    return res;
-}
-
-/*
-vector<int> mergeBST2(vector<int>& arr1, vector<int>& arr2, int val){
-    return {arr1.begin(), arr1.end(), val, arr2.begin(), arr2.end()};
-}
-*/
-
-vector<int> mergeBST3(vector<int>& arr1, vector<int>& arr2, int val){
-    vector<int> res;
-    res.reserve(arr1.size() + arr2.size() + 1); // per efficienza
-
-    res.insert(res.end(), arr1.begin(), arr1.end());
-    res.push_back(val);
-    res.insert(res.end(), arr2.begin(), arr2.end());
-
-    return res;
+    return t;
 }
 
 
