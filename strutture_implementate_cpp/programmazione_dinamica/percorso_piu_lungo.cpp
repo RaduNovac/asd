@@ -17,9 +17,9 @@ int percorso_piu_lungo(vector<int>& alture){
     int massimo = 1;      // Memorizza la lunghezza massima trovata fino ad ora
     
     for(int i = 1; i < n; ++i){//Parto dall'indice 1 perché nella prima altura ho un cammino di lunghezza 1 per definizione
-        for(int j = i - 1; j >= 0; j--){//Verifico le lunghezze dei percorsi precedenti, uso j
+        for(int j = i - 1; j >= 0; j--){//Verifico le lunghezze dei percorsi precedenti partendo da i - 1 fino a 0
             if(alture[j] >= alture[i]){//Condizione di altura precedente >= di quella corrente
-                l[i] = max(l[i], l[j] + 1);//Il + 1 interno lo faccio per contare la lunghezza del percorso fino all'atura corrente
+                l[i] = max(l[i], l[j] + 1);//Il + 1 interno lo faccio per contare la lunghezza del percorso fino all'altura corrente
             }
         }
         if(l[i] > massimo){//Mi salvo il massimo
