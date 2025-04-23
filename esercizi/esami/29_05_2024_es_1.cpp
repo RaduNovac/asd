@@ -10,12 +10,11 @@ vector<int> mergeBST(vector<int>& t1, vector<int>& t2, int val){
     vector<int> t(heapsize * 2 + 1);
 
     int h = log2(heapsize + 1);
+    cout << h << endl;
     t[0] = val;
     int x = 0;
-    for (int i = 0; i < h; i++)
-    {
-        for (int j = 0; j < pow(2, i); j++)
-        {
+    for (int i = 0; i < h; i++){
+        for (int j = 0; j < pow(2, i); j++){
             t[x + pow(2, i)] = t1[x];
             t[x + pow(2, i) * 2] = t2[x];
             x++;
