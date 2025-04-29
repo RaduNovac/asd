@@ -10,6 +10,25 @@
 
 using namespace std;
 
+/*
+    Caratterizzazione ricorsiva:
+    
+    l_i=
+    {
+        l = 1                                                    i = 0
+        l = max{l_j | j < i & alture[j] >= alture[i]} + 1        0 < i < n    
+    }
+*/
+/*
+    Complessità:
+    Il ciclo esterno fa esattamente n - 1 iterazioni (perché parto da 1 e non da 0).
+    Il ciclo interno fa j iterazioni con che fa da n - 1 - 1 iterazioni a 1.
+    
+    Ignorando le varie costanti giugniamo alla sommatoria:
+    T(n) = sum (from i = 1 to n - 1) i = Theta((n*(n-1))/2) = Theta(n^2)
+    
+*/
+
 int percorso_piu_lungo(vector<int>& alture){
     int n = alture.size();//Do per scontato che ci sia almeno 1 elemento delle alture
 
