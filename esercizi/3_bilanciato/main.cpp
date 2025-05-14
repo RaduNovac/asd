@@ -51,6 +51,55 @@ bool three_bil(pnode u){
     return (max - min <= 3);
 }
 
+//Un altra versione
+int check(pnode root){
+        int alt_sx, alt_dx;//altezza sinistra e destra
+        if (!root){
+            return 0;
+        }
+
+        alt_sx = check(root->left);
+        alt_dx = check(root->right);
+
+
+        if (alt_sx == -1 ||alt_dx == -1){
+            return -1;
+        }
+
+        if (abs(alt_sx - alt_dx) > 1) return -1;
+
+        return max(alt_sx, alt_dx) + 1;
+}
+bool isBalanced(pnode root){
+    return check(root) != -1;
+}
+
+//Una versione generica, per un albero k bilanciato
+int check(pnode root, int k){
+        int alt_sx, alt_dx;//altezza sinistra e destra
+        //Scorro fino alle foglie dell'albero
+        if(!root){//Se l'albero non c'è, ritorno 0
+            return 0;
+        }
+
+        alt_sx = check(root->left, k);
+        alt_dx = check(root->right, k);
+
+
+        if(alt_sx == -1 ||alt_dx == -1){//Se ho il sottoalbero sx o dx nulli ritorno -1
+            return -1;
+        }
+
+        if(abs(alt_sx - alt_dx) > k){//Appena trovo due sottoalberi sbilanciati ritorno -1
+            return -1;
+        }
+
+        return max(alt_sx, alt_dx) + 1;
+}
+bool isBalanced(pnode root, int k){
+    return check(root, k) != -1;
+}
+
 int main(){
     //Albero 3_bilanciato
     node nodo_1{0};
@@ -85,8 +134,15 @@ int main(){
     nodo_11.right = &nodo_13;
     nodo_12.left = &nodo_14;
     nodo_14.right = &nodo_15;
-
+    //soluzione prof
     if(three_bil(&nodo_11)){
+        cout << "e' 3 bilanciato!" << endl;
+    }
+    else{
+        cout << "NON e' 3 bilanciato!" << endl;
+    }
+    //versione generica
+    if(isBalanced(&nodo_11, 3)){
         cout << "e' 3 bilanciato!" << endl;
     }
     else{
