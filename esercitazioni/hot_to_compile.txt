@@ -1,1 +1,0 @@
-g++ -std=c++14 --pedantic -Wall -o es1 main_es1.cpp
