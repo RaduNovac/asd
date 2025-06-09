@@ -9,7 +9,7 @@ using namespace std;
 
 //Heap Sort
 void max_heapify(vector<int>& v, int n, int i) {//n è la heap_size, i è il nodo radice del sottoalbero
-    int max;
+    int max = i;
 	int l = 2 * i + 1;     // Figlio sinistro
 	int r = 2 * i + 2;    // Figlio destro
 
@@ -17,9 +17,6 @@ void max_heapify(vector<int>& v, int n, int i) {//n è la heap_size, i è il nod
 	if(l <= n && v[l] > v[max]){
 		max = l;
 	}
-    else{
-        max = i;
-    }
 
 	// Se il figlio destro è più grande della radice
 	if(r <= n && v[r] > v[max]){

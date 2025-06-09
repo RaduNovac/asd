@@ -62,6 +62,10 @@ int main() {
     // Vettore di esempio
     int vettore[] = {5, 2, 7, 3, 10, 1, 6, 9, 4, 8,};
     int lunghezza = sizeof(vettore) / sizeof(vettore[0]);
+	cout << "check max heapify:"<<endl;
+	max_heapify(vettore, lunghezza, 10);
+	stampaVettore(vettore, lunghezza);
+	cout << endl;
 
     cout << "Vettore originale: ";
     stampaVettore(vettore, lunghezza);
