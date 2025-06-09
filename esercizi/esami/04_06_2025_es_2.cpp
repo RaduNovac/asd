@@ -8,25 +8,28 @@ using namespace std;
 */
 
 //Heap Sort
-void max_heapify(vector<int> vettore, int n, int i) {//n è la heap_size, i è il nodo radice del sottoalbero
-	int massimo = i;          // Inizializza il nodo più grande come radice
+void max_heapify(vector<int>& v, int n, int i) {//n è la heap_size, i è il nodo radice del sottoalbero
+    int max;
 	int l = 2 * i + 1;     // Figlio sinistro
 	int r = 2 * i + 2;    // Figlio destro
 
 	// Se il figlio sinistro è più grande della radice
-	if (l < n && vettore[l] > vettore[massimo]) {
-			massimo = l;
+	if(l <= n && v[l] > v[max]){
+		max = l;
 	}
+    else{
+        max = i;
+    }
 
 	// Se il figlio destro è più grande della radice
-	if (r < n && vettore[r] > vettore[massimo]) {
-			massimo = r;
+	if(r <= n && v[r] > v[max]){
+		max = r;
 	}
 
 	// Se il nodo più grande non è la radice
-	if (i != massimo) {
-			swap(vettore[i], vettore[massimo]);  // Scambia la radice con il nodo più grande
-			max_heapify(vettore, n, massimo);    // Richiama heapify sul sotto-albero
+	if(i != max){
+		swap(v[i], v[max]);  // Scambia la radice con il nodo più grande
+		max_heapify(v, n, max);    // Richiama heapify sul sotto-albero
 	}
 }
 
@@ -114,11 +117,17 @@ int main(){
     h2.push_back(1);
 
     print(h1);
-    print(h2);
+    //print(h2);
 
-    vector<int> h3 = intersezione(h1, h2);
+    extract_root(h1);
 
-    print(h3);
+    max_heapify(h1, h1.size(), h1[0]);
+
+    print(h1);
+
+    //vector<int> h3 = intersezione(h1, h2);
+
+    //print(h3);
 
     return 0;
 }
