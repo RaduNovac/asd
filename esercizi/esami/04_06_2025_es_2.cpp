@@ -9,19 +9,13 @@ using namespace std;
 
 //Max heapify
 void max_heapify(vector<int>& v, int n, int i){//n è la heap_size, i è il nodo radice del sottoalbero
-    int max = i;
-	int l = 2 * i + 1;     // Figlio sinistro
-	int r = 2 * i + 2;    // Figlio destro
+    int max = i, l = 2 * i + 1, r = 2 * i + 2;
 
 	// Se il figlio sinistro è più grande della radice
-	if(l < n && v[l] > v[max]){
-		max = l;
-	}
+	if(l < n && v[l] > v[max]) max = l;
 
 	// Se il figlio destro è più grande della radice
-	if(r < n && v[r] > v[max]){
-		max = r;
-	}
+	if(r < n && v[r] > v[max]) max = r;
 
 	// Se il nodo più grande non è la radice
 	if(i != max){
@@ -31,17 +25,13 @@ void max_heapify(vector<int>& v, int n, int i){//n è la heap_size, i è il nodo
 }
 
 void extract_root(vector<int>& v){
-    if(v.empty()){
-        return;
-    }
+    if(v.empty()) return;
     
     swap(v[0], v[v.size() -1]);
 
     v.pop_back();
 
-    if(!v.empty()){
-        max_heapify(v, v.size(), 0);
-    }
+    if(!v.empty()) max_heapify(v, v.size(), 0);
 }
 
 vector<int> intersezione(vector<int>& h1, vector<int>& h2){
