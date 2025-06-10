@@ -97,17 +97,10 @@ int main(){
     print(h1);
     print(h2);
 
-    //extract_root(h1);
-
-    //max_heapify(h1, h1.size(), 0);
-
-    //print(h1);
-
     vector<int> h3 = intersezione(h1, h2);
 
     cout << "L'esito dell'intersezione e':\n";
     print(h3);
-    //cout << h3.size() << endl;
 
     return 0;
 }
