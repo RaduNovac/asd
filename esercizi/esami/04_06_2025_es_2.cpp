@@ -34,12 +34,8 @@ void extract_root(vector<int>& v){
     if(v.empty()){
         return;
     }
-
-    //swap
-    int tmp;
-    tmp = v[0];
-    v[0] = v[v.size() -1];
-    v[v.size() -1] = tmp;
+    
+    swap(v[0], v[v.size() -1]);
 
     v.pop_back();
 
