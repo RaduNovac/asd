@@ -7,19 +7,19 @@ using namespace std;
     Dati due max heap, ritornare un max heap contenente l'intersezione dei due heap
 */
 
-//Heap Sort
-void max_heapify(vector<int>& v, int n, int i) {//n è la heap_size, i è il nodo radice del sottoalbero
+//Max heapify
+void max_heapify(vector<int>& v, int n, int i){//n è la heap_size, i è il nodo radice del sottoalbero
     int max = i;
 	int l = 2 * i + 1;     // Figlio sinistro
 	int r = 2 * i + 2;    // Figlio destro
 
 	// Se il figlio sinistro è più grande della radice
-	if(l <= n && v[l] > v[max]){
+	if(l < n && v[l] > v[max]){
 		max = l;
 	}
 
 	// Se il figlio destro è più grande della radice
-	if(r <= n && v[r] > v[max]){
+	if(r < n && v[r] > v[max]){
 		max = r;
 	}
 
@@ -30,8 +30,10 @@ void max_heapify(vector<int>& v, int n, int i) {//n è la heap_size, i è il nod
 	}
 }
 
-int extract_root(vector<int>& v){
-    int res = v[0];
+void extract_root(vector<int>& v){
+    if(v.empty()){
+        return;
+    }
 
     //swap
     int tmp;
@@ -41,45 +43,28 @@ int extract_root(vector<int>& v){
 
     v.pop_back();
 
-    return res;
+    if(!v.empty()){
+        max_heapify(v, v.size(), 0);
+    }
 }
 
-vector<int> intersezione(vector<int> h1, vector<int> h2){
-    int n1 = h1.size();
-    int n2 = h2.size();
-
-    cout << n1 << endl << n2 << endl;
-
-    int i = 0, j = 0;
-
+vector<int> intersezione(vector<int>& h1, vector<int>& h2){
     vector<int> res;
 
-    while(i <= n1 && j <= n2){//Fino a quando sono nei limiti dei due array
-        cout << "h1[0]: " << h1[0] << ", h2[0]: " << h2[0] << endl; 
+    while(!h1.empty() && !h2.empty()){//Fino a quando ci sono elementi negli array
         if(h1[0] == h2[0]){//Se sono uguali inserisco l'elemento in res e vado avanti
-            res.push_back(extract_root(h1));
-            extract_root(h2);
-            cout << "a\n";
-            max_heapify(h1, h1.size(), h1[0]);
-            max_heapify(h2, h2.size(), h2[0]);
-
-            i++;
-            j++;
-        }
-        if(h1[0] > h2[0]){//Se la root di h1 è > di quella di h2 la scarto e rifaccio il maxheapify
+            res.push_back(h1[0]);
             extract_root(h1);
-            cout << "b\n";
-            max_heapify(h1, h1.size(), h1[0]);
-            i++;
+            extract_root(h2);
+        }
+        else if(h1[0] > h2[0]){//Se la root di h1 è > di quella di h2 la scarto e rifaccio il maxheapify
+            extract_root(h1);
         }
         else{//Allora h1[0] < h2[0]
             extract_root(h2);
-            cout << "c\n";
-            max_heapify(h2, h2.size(), h2[0]);
-            j++;
         }
     }
-
+    
     return res;
 }
 
@@ -114,17 +99,19 @@ int main(){
     h2.push_back(1);
 
     print(h1);
-    //print(h2);
+    print(h2);
 
-    extract_root(h1);
+    //extract_root(h1);
 
-    max_heapify(h1, h1.size(), h1[0]);
+    //max_heapify(h1, h1.size(), 0);
 
-    print(h1);
+    //print(h1);
 
-    //vector<int> h3 = intersezione(h1, h2);
+    vector<int> h3 = intersezione(h1, h2);
 
-    //print(h3);
+    cout << "L'esito dell'intersezione e':\n";
+    print(h3);
+    //cout << h3.size() << endl;
 
     return 0;
 }
