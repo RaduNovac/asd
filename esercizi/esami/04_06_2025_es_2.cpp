@@ -23,7 +23,7 @@ void max_heapify(vector<int>& v, int n, int i){//n è la heap_size, i è il nodo
 		max_heapify(v, n, max);    // Richiama heapify sul sotto-albero
 	}
 }
-
+//Funzione che fa il pop della radice dell'heap
 void extract_root(vector<int>& v){
     if(v.empty()) return;
     
@@ -33,7 +33,7 @@ void extract_root(vector<int>& v){
 
     if(!v.empty()) max_heapify(v, v.size(), 0);
 }
-
+//Funzione per creare l'intersezione tra i due heap
 vector<int> intersezione(vector<int>& h1, vector<int>& h2){
     vector<int> res;
 
