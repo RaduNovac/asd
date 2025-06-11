@@ -36,19 +36,18 @@ void extract_root(vector<int>& v){
 //Funzione per creare l'intersezione tra i due heap
 vector<int> intersezione(vector<int>& h1, vector<int>& h2){
     vector<int> res;
-
-    while(!h1.empty() && !h2.empty()){//Fino a quando ci sono elementi negli array
-        if(h1[0] == h2[0]){//Se sono uguali inserisco l'elemento in res e vado avanti
+    //Fino a quando ci sono elementi negli array
+    while(!h1.empty() && !h2.empty()){
+        //Se sono uguali inserisco l'elemento in res e vado avanti
+        if(h1[0] == h2[0]){
             res.push_back(h1[0]);
             extract_root(h1);
             extract_root(h2);
         }
-        else if(h1[0] > h2[0]){//Se la root di h1 è > di quella di h2 la scarto e rifaccio il maxheapify
-            extract_root(h1);
-        }
-        else{//Allora h1[0] < h2[0]
-            extract_root(h2);
-        }
+        //Se la root di h1 è > di quella di h2 la scarto e rifaccio il maxheapify
+        else if(h1[0] > h2[0]) extract_root(h1);
+        //Allora h1[0] < h2[0]
+        else extract_root(h2);
     }
     
     return res;
