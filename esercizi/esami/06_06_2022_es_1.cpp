@@ -19,7 +19,7 @@ struct Node{
 typedef Node* PNode;
 
 void funzione(PNode u, int& sum){
-	if(!u)  return;
+	if(!u) return;
 	else{
 		int sum_sx = 0, sum_dx = 0;
 
@@ -40,7 +40,8 @@ int marco(vector<int> &v, PNode u){
         int right = marco(v, u -> right);
 
         if(left > right){
-            v.push_back(u -> key);
+            //v.push_back(u -> key);
+            cout << u -> key << endl;
         }
 
         return 1 + left + right;
